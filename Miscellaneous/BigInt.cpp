@@ -5,7 +5,7 @@
     Complexity   :
     
     ***Use with caution, not a very first algorithm. 
-    Do not attempt to use *, /, % if numbers are 104 or more digits long.
+    Do not attempt to use *, /, % if numbers are 10^4 or more digits long.
 */
  
 #include <cstdio>
