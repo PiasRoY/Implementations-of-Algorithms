@@ -16,12 +16,12 @@ void build(int pos, int l, int r)
     tree[pos] = tree[pos*2] + tree[pos*2+1];
 }
 
-void range_update(int pos, int l, int r, int L, int R, int x)
+void range_update(int pos, int L, int R, int l, int r, int x)
 {
     if(prop[pos]) {
-        tree[pos] += (r-l+1)*prop[pos];
+        tree[pos] += (R-L+1)*prop[pos];
 
-        if(l != r) {
+        if(L != R) {
             prop[pos*2] += prop[pos];
             prop[pos*2+1] += prop[pos];
         }
@@ -29,10 +29,10 @@ void range_update(int pos, int l, int r, int L, int R, int x)
         prop[pos] = 0;
     }
 
-    if(l > R || r < L) return;
+    if(L > r || R < l) return;
 
-    if(l >= L && r <= R) {
-        tree[pos] += (r-l+1)*x;
+    if(l <= L && R <= r) {
+        tree[pos] += (R-L+1)*x;
 
         if(l != r) {
             prop[pos*2] += x;
@@ -42,19 +42,19 @@ void range_update(int pos, int l, int r, int L, int R, int x)
         return;
     }
 
-    int mid = (l+r)/2;
-    range_update(pos*2, l, mid, L, R, x);
-    range_update(pos*2+1, mid+1, r, L, R, x);
+    int mid = (L+R)/2;
+    range_update(pos*2, L, mid, l, r, x);
+    range_update(pos*2+1, mid+1, R, l, r, x);
 
     tree[pos] = tree[pos*2] + tree[pos*2+1];
 }
 
-int query(int pos, int l, int r, int L, int R)
+int query(int pos, int L, int R, int l, int r)
 {
     if(prop[pos]) {
-        tree[pos] += (r-l+1)*prop[pos];
+        tree[pos] += (R-L+1)*prop[pos];
 
-        if(l != r) {
+        if(L != R) {
             prop[pos*2] += prop[pos];
             prop[pos*2+1] += prop[pos];
         }
@@ -62,12 +62,12 @@ int query(int pos, int l, int r, int L, int R)
         prop[pos] = 0;
     }
 
-    if(l > R || r < L) return 0;
-    if(l >= L && r <= R) return tree[pos];
+    if(L > r || R < l) return 0;
+    if(l <= L && R <= r) return tree[pos];
 
     int mid = (L+R)/2;
-    int Lch = query(pos*2, l, mid, L, R);
-    int Rch = query(pos*2+1, mid+1, r, L, R);
+    int Lch = query(pos*2, L, mid, l, r);
+    int Rch = query(pos*2+1, mid+1, R, l, r);
 
     return Lch+Rch;
 }

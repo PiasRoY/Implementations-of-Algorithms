@@ -1,7 +1,7 @@
 //Prim's Algorithm
 ll mst;
 bool taken[MX];
-vector <pll> edges[MX];
+vector <pll> adj[MX];
 
 void prims_algo(ll start) //Complexity: O(ElogV), better for dense graph
 {
@@ -20,8 +20,8 @@ void prims_algo(ll start) //Complexity: O(ElogV), better for dense graph
 			taken[u] = true;
 			mst += w;
 
-			for(ll i = 0; i < edges[u].size(); i++) {
-				ll v = edges[u][i].ff, _w = edges[u][i].ss;
+			for(ll i = 0; i < adj[u].size(); i++) {
+				ll v = adj[u][i].ff, _w = adj[u][i].ss;
 
 				if(!taken[v]) {
 					pq.push(mk(_w, v));

@@ -1,18 +1,18 @@
 //Kruskal Algorithm
-ll parent[MX], mst;
+ll dsu[MX], mst;
 vector <pair<ll, pair<ll, ll> > > edgeslist; //(w, u, v)
 
 ll fnd(ll x)
 {
-    if(x == parent[x]) return x;
-    return parent[x] = find(parent[x]);
+    if(x == dsu[x]) return x;
+    return dsu[x] = fnd(dsu[x]);
 }
 
 void kruskal_algo() //Complexity: O(ElogV), better for sparse graph.
 {
     //disjoint set
     for(int i = 0; i < MX; i++)
-        parent[i] = i;
+        dsu[i] = i;
 
     sort(edgeslist.begin(), edgeslist.end());
 
@@ -23,7 +23,7 @@ void kruskal_algo() //Complexity: O(ElogV), better for sparse graph.
 
         if(pu != pv)
         {
-            parent[pu] = pv;
+            dsu[pu] = pv;
             mst += edgeslist[i].ff;
         }
     }
