@@ -1,7 +1,7 @@
 struct simplehash{
     int len;
     long long base, mod;
-    vector <int> P, H, R;
+    vector <int> P, H, R; //P = Powers of the base, H = Hash value, R = Reverse hash value.
 
     simplehash(){}
     simplehash(const char* str, long long b, long long m){
