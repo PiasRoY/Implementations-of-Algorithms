@@ -4,7 +4,7 @@ struct simplehash{
     vector <int> P, H, R; //P = Powers of the base, H = Hash value, R = Reverse hash value.
 
     simplehash(){}
-    simplehash(const char* str, long long b, long long m){
+    simplehash(const char* str, long long b, long long m){ //hash = str[0]*P[n-1] + str[1]*P[n-2] + .... + str[n-1]*P[0]
         base = b, mod = m, len = strlen(str);
         P.resize(len + 3, 1), H.resize(len + 3, 0), R.resize(len + 3, 0);
 
