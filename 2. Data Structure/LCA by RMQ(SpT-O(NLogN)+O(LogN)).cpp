@@ -20,10 +20,9 @@ void lca_init(int N) //Complexity: O(NlogN)
 {
 	dfs(0, 0, 0);
 
-	int i, j;
-
 	memset(lca, -1, sizeof lca);
 
+	int i, j;
 	for (i = 1; i <= N; i++)
 		lca[i][0] = par[i];
 

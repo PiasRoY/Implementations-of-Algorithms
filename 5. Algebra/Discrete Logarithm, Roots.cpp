@@ -88,7 +88,36 @@ ll discrete_log(ll a, ll b, ll m) //Complexity: O(sqrt(m)*log(m))
 
 /*
 Discrete Root (cp-algorithm)
+x^k \equiv a (mod P), where P is prime. Find all possible 'x'.
+Suppose, 'g' is a primitive root modulo P. So 'x' can be written as [g^y \equiv x (mod P)].
+So, g^(y*k) \equiv a (mod P). Now find y using giant step-baby step algorithm. One possible answer is x = g^y.
+after that to find all other x = g^{y+(i*(phi(n)/gcd(k, phi(n))))}
+
 */
 
+//x^a = b (mod m), where m is prime
+//(g^k)^a = b (mod m) => (g^a)^k = b (mod m), where g is primitive root
+ll discrete_root(ll a, ll b, ll m)
+{
+    ll g = primitive_root(m);
 
+    ll x = discrete_log(bigmod(g, a, mod), b, m);
+
+    if(x != -1) {
+        x = bigmod(g, x, m);
+    }
+
+    return x;
+
+    // Print all possible answers
+//    ll delta = (m-1) / __gcd(k, m-1);
+//    vector<ll> ans;
+//    for (ll cur = any_ans % delta; cur < m-1; cur += delta)
+//        ans.push_back(bigmod(g, cur, m));
+//    sort(ans.begin(), ans.end());
+//
+//    printf("%d\n", ans.size());
+//    for (int answer : ans)
+//        printf("%lld ", answer);
+}
 

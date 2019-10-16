@@ -64,7 +64,7 @@ public:
 		return temp;
 	}
 
-	matrix pow(int pow) { //Complexity: O(logN) * O(N^3) = O(N^3 * logN)
+	matrix pow(int pow) { //Complexity: O(logPow) * O(N^3) = O(N^3 * logPow)
 		matrix temp = (*this);
 		matrix ret = (*this).identity();
 

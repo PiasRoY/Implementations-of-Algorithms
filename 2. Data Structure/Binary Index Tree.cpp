@@ -2,17 +2,17 @@
 #define MX 100005
 int n, bit[MX]; //bit[n], bit is like cumulative array but contains partial sums.
 
-int query(int x)
+int query(int indx)
 {
-	int res = 0;
-	for(x = x+1; x > 0; x -= x&-x)
-		res += bit[x];
+	int sum = 0;
+	for(indx = indx+1; indx > 0; indx -= indx&-indx)
+		sum += bit[indx];
 
-	return res;
+	return sum;
 }
 
-void update(int x, int val)
+void update(int indx, int val)
 {
-	for(x = x+1; x <= n; x += x&-x)
-		bit[x] += val;
+	for(indx = indx+1; indx <= n; indx += indx&-indx)
+		bit[indx] += val;
 }
