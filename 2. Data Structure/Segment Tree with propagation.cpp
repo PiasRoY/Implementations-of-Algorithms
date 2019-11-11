@@ -3,7 +3,7 @@
 int arr[MX];
 int tree[MX*4], prop[MX*4];
 
-void build(int pos, int l, int r)
+void build(int pos, int l, int r) //Complexity: O(N)
 {
     if(l == r) {
         tree[pos] = arr[l];
@@ -17,7 +17,7 @@ void build(int pos, int l, int r)
     tree[pos] = tree[pos*2] + tree[pos*2+1];
 }
 
-void push_down(int pos, int L, int R) //Complexity: O(N)
+void push_down(int pos, int L, int R) 
 {
     tree[pos] += (R-L+1)*prop[pos];
 

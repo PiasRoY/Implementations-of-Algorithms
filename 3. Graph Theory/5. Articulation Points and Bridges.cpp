@@ -1,21 +1,21 @@
 void APB(int u)
 {
-	dfs_low[u] = dfs_num[u] = dfsNumberCounter++;
+	dfs_low[u] = dfs_no[u] = dfs_counter++;
 
 	for(int j = 0; j < adj[u].size(); j++) {
 		int v = adj[u][i];
 
-		if(dfs_num[v] == UNVISITED) {
+		if(dfs_no[v] == -1) {
 			dfs_parent[v] = u;
 
 			if(u == dfsRoot) rootChildren++;
 
 			APB(v);
 
-			if(dfs_low[v] >= dfs_num[u]) //Articulation Points
+			if(dfs_low[v] >= dfs_no[u]) //Articulation Points
 				articulation_vertex[u] = true;
 
-			if(dfs_low[v] > dfs_num[u]) //Articulation Bridges
+			if(dfs_low[v] > dfs_no[u]) //Articulation Bridges
 				articulation_bridge.pb(mk(u, v));
 
 			dfs_low[u] = min(dfs_low[u], dfs_low[v]); //update dfs_low[u]
@@ -26,16 +26,17 @@ void APB(int u)
 	}
 }
 
-void articulationPointandBridges() //Complexity: O(V+E)
+//Complexity: O(V+E)
+void articulationPointandBridges(int n) //n = vertex number
 {
-	dfsNumberCounter = 0;
-	memset(dfs_low, 0, sizeof dfs_low);
-	memset(dfs_parent, 0, sizeof dfs_parent);
-	memset(dfs_num, UNVISITED, sizeof dfs_num);
-	memset(articulation_vertex, false, sizeof articulation_vertex);
+	dfs_counter = 0;
+	for(int i = 0; i < n; i++) { //0-based index
+        articulation_vertex[i] = dfs_low[i] = dfs_parent[i] = 0;
+        dfs_no[i] = -1;
+	}
 
-	for(int i = 0; i < V; i++) { //V = Vertex Number
-		if(dfs_num[i] == UNVISITED) {
+	for(int i = 0; i < n; i++) {
+		if(dfs_no[i] == -1) {
 			dfsRoot = i;
 			rootChildren = 0;
 			APB(i);

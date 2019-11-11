@@ -18,15 +18,9 @@ orderedMultiSet <int> oms;
 /*Alternative of unordered_map is gp_hash_table (x6 times faster):
 	#include <ext/pb_ds/assoc_container.hpp>
 	using namespace __gnu_pbds;
-	gp_hash_table <int, int> table;
-
-	//how to use 'pairs' as key:
-	struct hash_pair {
-		ll operator() (pair<ll, pll> x) const {
-			return x.ff*63 + x.ss.ff*31 + x.ss.ss;
-		}
-	};
-	gp_hash_table <pair<ll, pll>, ll, hash_pair> dp;
+	gp_hash_table<int, int> table;
+	
+	gp <pair<ll, pll>, ll, hash_pair> dp;
 */
 
 /*

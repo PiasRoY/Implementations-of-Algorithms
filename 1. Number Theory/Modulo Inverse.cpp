@@ -2,7 +2,7 @@
 
 //Using extended euclidean algorithm, when gcd(a, m) = 1;
 
-int extended_euclidean(int a, int b, int & x, int & y) {
+int extended_gcd(int a, int b, int & x, int & y) {
     if (a == 0) {
         x = 0;
         y = 1;
@@ -10,7 +10,7 @@ int extended_euclidean(int a, int b, int & x, int & y) {
     }
 
     int x1, y1;
-    int gcd = extended_euclidean(b % a, a, x1, y1);
+    int gcd = extended_gcd(b % a, a, x1, y1);
     x = y1 - (b / a) * x1;
     y = x1;
 
@@ -21,7 +21,7 @@ int extended_euclidean(int a, int b, int & x, int & y) {
 int modInv(int a, int m) {
 	int x, y, g;
 
-	g = extended_euclidean(a, m, x, y);
+	g = extended_gcd(a, m, x, y);
 
 	if (g != 1) return -1; //no solution
 	else {
@@ -29,4 +29,13 @@ int modInv(int a, int m) {
 		return mod_inv;
 	}
 }
+
+//modulo from 1 to N
+int inv[MX];
+inv[1] = 1;
+for(int i = 2; i <= n; i++) {
+    inv[i] = (-(m/i) * inv[m%i]) % m;
+    inv[i] = inv[i] + m;
+}
+
 

@@ -20,6 +20,12 @@ void calculate_dis(int u, int par, int dis, int src)
     }
 }
 
+///Calculate distance from all centroid if edge is unweighted
+int dist(int u,int v) //Complexity: O(logN) / O(1)
+{
+	return height[u] + height[v] - 2*height[lca(u,v)];
+}
+
 
 ///calculate number of child in a subtree
 int dfs(int u, int par)

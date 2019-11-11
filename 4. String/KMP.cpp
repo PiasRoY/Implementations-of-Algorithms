@@ -2,11 +2,10 @@ int lps[MX];
 
 void computeLPSArray(string &pat, int M) //Longest Prefix Sub array
 {
-    int len = 0;
+    int i = 1, len = 0;
 
     lps[0] = 0;
 
-    int i = 1;
     while (i < M) {
         if (pat[i] == pat[len]) {
             len++;

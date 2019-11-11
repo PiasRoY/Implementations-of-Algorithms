@@ -1,17 +1,17 @@
 //LCA using sparse table; Complexity: O(NlgN,lgN)
-int lvl[MX], par[MX], lca[MX][18];
+int depth[MX], par[MX], lca[MX][18];
 
-void dfs(int from, int u, int dep)
+void dfs(int from, int u, int h)
 {
     par[u] = from;
-    lvl[u] = dep;
+    depth[u] = h;
 
     for(int i = 0; i < adj[u].size(); i++)
     {
         int v = adj[u][i];
 
         if(v != from) {
-			dfs(u, v, dep+1);
+			dfs(u, v, h+1);
         }
     }
 }
@@ -36,18 +36,18 @@ int lca_query(int p, int q) //Complexity: O(logN)
 {
 	int i, pow2;
 
-	if (lvl[p] < lvl[q]) swap(p, q);
+	if (depth[p] < depth[q]) swap(p, q);
 
 	pow2 = 1;
 	while(true) {
 		int next = pow2+1;
 
-        if((1<<next) > lvl[p])break;
+        if((1<<next) > depth[p])break;
         else pow2++;
 	}
 
 	for (i = pow2; i >= 0; i--)
-		if ((lvl[p] - (1 << i)) >= lvl[q])
+		if ((depth[p] - (1 << i)) >= depth[q])
 			p = lca[p][i];
 
 	if (p == q)

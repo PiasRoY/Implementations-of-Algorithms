@@ -1,5 +1,5 @@
 #define MX 3000005
-llu tot[MX], res[MX];
+llu tot[MX];
 void phi_sieve()
 {
     for(int i = 1; i < MX; i++) {
