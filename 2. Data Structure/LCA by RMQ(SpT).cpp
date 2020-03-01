@@ -36,7 +36,7 @@ void build(int n)
 	for(int i = 0; i < n; i++) //0-based index
 		spt[i][0] = i;
 
-	for(int j = 1; (1 << j) < n; j++) {
+	for(int j = 1; (1 << j) <= n; j++) {
 		for(int i = 0; (i + (1<<j) - 1) < n; i++) {
 			if(depth[spt[i][j-1]] < depth[spt[i + (1<<(j-1))][j-1]])
 				spt[i][j] = spt[i][j-1];

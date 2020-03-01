@@ -24,3 +24,14 @@ int query(int L, int R)
 	if(arr[spt[L][j]] < arr[spt[R-(1<<j)+1][j]]) return arr[spt[L][j]]; //return spt[L][j] for index
 	else return arr[spt[R-(1<<j)+1][j]]; //same for it.
 }
+
+ll query(ll l, ll r) {
+	ll sum = 0;
+	for(ll j = log2(r-l+1); j >= 0; j--) {
+		if(l+(1<<j)-1 <= r) {
+			sum += sm[l][j];
+			l += (1<<j);
+		}
+	}
+	return sum;
+}

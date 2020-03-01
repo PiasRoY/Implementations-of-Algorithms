@@ -61,7 +61,7 @@ ll primitive_root(ll p) //Complexity: O((logP)^6)
 Instead of a map, we can also use a hash table (unordered_map in C++)
 which has the average time complexity O(1) for inserting and searching.
 */
-//gives minimum 'x' such that (a^x)%m ; gcd(a, m) = 1;
+//gives minimum 'x' such that (a^x)%m,
 ll discrete_log(ll a, ll b, ll m) //Complexity: O(sqrt(m)*log(m))
 {
     ll n = sqrt (m) + 1;
@@ -112,12 +112,12 @@ ll discrete_root(ll a, ll b, ll m)
     // Print all possible answers
 //    ll delta = (m-1) / __gcd(k, m-1);
 //    vector<ll> ans;
-//    for (ll cur = x % delta; cur < m-1; cur += delta)
+//    for (ll cur = any_ans % delta; cur < m-1; cur += delta)
 //        ans.push_back(bigmod(g, cur, m));
 //    sort(ans.begin(), ans.end());
 //
 //    printf("%d\n", ans.size());
-//    for (ll answer : ans)
+//    for (int answer : ans)
 //        printf("%lld ", answer);
 }
 
