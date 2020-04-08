@@ -1,6 +1,6 @@
 //fenwick tree
 #define MX 100005
-int n, bit[MX]; //bit[n], bit is like cumulative array but contains partial sums.
+int n, bit[MX]; //0-indexed
 
 int query(int indx)
 {

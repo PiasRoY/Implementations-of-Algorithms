@@ -1,43 +1,44 @@
-int subtree[N], parentcentroid[N];
-set<int> g[N];
+#define MX 100005
+int nodes, subtree[MX], parentcentroid[MX];
+set <int> adj[MX];
 
-void dfs(int k, int par)
+/*----------decompose part----------*/
+void dfs(int u, int par) //O(V+E)
 {
 	nodes++;
-	subtree[k]=1;
-	for(auto it:g[k])
-	{
-		if(it==par)
-			continue;
-		dfs(it, k);
-		subtree[k]+=subtree[it];
+	subtree[u]=1;
+	for(auto it : adj[u]) {
+		if(it == par) continue;
+		dfs(it, u);
+		subtree[u] += subtree[it];
 	}
 }
 
-int centroid(int k, int par)
+int centroid(int u, int par) //O(logN)
 {
-	for(auto it:g[k])
-	{
-		if(it==par)
-			continue;
-		if(subtree[it]>(nodes>>1))
-			return centroid(it, k);
+	for(auto v : adj[u]) {
+		if(v == par) continue;
+		if(subtree[v]>(nodes>>1)) {
+			return centroid(v, u);
+		}
 	}
-	return k;
+	return u;
 }
 
-void decompose(int k, int par)
+void decompose(int u, int par) //O(NlogN)
 {
-	nodes=0;
-	dfs(k, k);
-	int node=centroid(k, k);
-	parentcentroid[node]=par;
-	for(auto it:g[node])
-	{
-		g[it].erase(node);
-		decompose(it, node);
+	nodes = 0;
+	dfs(u, u);
+
+	int node = centroid(u, u);
+	parentcentroid[node] = par;
+
+	for(auto v : adj[node]) {
+		adj[v].erase(node);
+		decompose(v, node);
 	}
 }
+/*-----------------------------------*/
 
 //Problem 1: https://codeforces.com/contest/322/problem/E
 //Solution 1: https://codeforces.com/contest/322/submission/45791742

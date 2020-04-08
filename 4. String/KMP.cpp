@@ -24,7 +24,7 @@ void computeLPSArray(string &pat, int M) //Longest Prefix Sub array
     }
 }
 
-void KMPSearch(string &pat, string &txt)
+int KMPSearch(string &pat, string &txt)
 {
     int M = pat.size();
     int N = txt.size();
