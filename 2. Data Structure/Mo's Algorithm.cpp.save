@@ -40,7 +40,7 @@ void solve(ll n, ll m)
 }
 
 //alternative sorting ordering
-inline int gilbertOrder(int x, int y, int pow, int rotate) //(l, r, 21, 0)
+inline int gilbertOrder(int x, int y, int pow, int rotate) //(l, r,)
 {
 	if (pow == 0) {
 		return 0;
