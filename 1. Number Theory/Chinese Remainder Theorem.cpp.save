@@ -39,53 +39,49 @@ ll CRT(vector<ll>num, vector<ll>rem, ll k)
     return result % prod;
 }
 
-//CRT | CF
-#define MX 100005
-ll a[MX], n[MX];
-
-ll ex_gcd(ll a, ll b, ll &x, ll &y) {
+//CF implement
+int extended_gcd(int a, int b, int & x, int & y) {
 	if(a == 0) {
 		x = 0;
 		y = 1;
 		return b;
 	}
 
-	ll x1, y1, gcd;
-	gcd = ex_gcd(b%a, a, x1, y1);
+	int x1, y1, gcd;
+	gcd = extended_gcd(b%a, a, x1, y1);
 	x = y1 - (b/a) * x1;
 	y = x1;
 
 	return gcd;
 }
 
-ll normalize(ll x, ll m)
+int normalize(int x, int mod)
 {
-    x %= m;
-    return (x<0) ? x+=m : x;
+    x %= mod;
+    return (x<0) ? x+=mod : x;
 }
 
-ll solve()
+void solve()
 {
-    ll m, ans, lcm, x1, x2, g;
-
-    scanf("%lld", &m);
-    for(ll i = 1; i <= m; i++) {
-        scanf("%lld %lld", &a[i], &n[i]);
+    int m
+    scanf("%d", &m);
+    for(int i = 1; i <= m; i++) {
+        scanf("%d %d", &a[i], &n[i]);
         normalize(a[i], n[i]);
     }
 
     ans = a[1];
     lcm = n[1];
-    for(ll i = 2; i <= m; i++)
+    for(int i = 2; i <= t; i++)
     {
-        g = ex_gcd(lcm, n[i], x1, x2);
-
-        if((a[i] - ans) % g != 0) return 0; //no solution
-        ans = normalize(ans + x1 * (a[i] - ans) / g % (n[i] / g) * lcm, lcm * n[i] / g);
-        lcm = lcm * n[i] / g;
+        auto pom = ex_GCD(lcm, n[i]);
+        int x1 = pom.x;
+        int d = pom.d;
+        if((a[i] - ans) % d != 0) return cerr << "No solutions" << endl, 0;
+        ans = normalize(ans + x1 * (a[i] - ans) / d % (n[i] / d) * lcm, lcm * n[i] / d);
+        lcm = LCM(lcm, n[i]); // you can save time by replacing above lcm * n[i] /d by lcm = lcm * n[i] / d
     }
-
-    return ans;
+    cout << ans << " " << lcm << endl;
 }
 
 

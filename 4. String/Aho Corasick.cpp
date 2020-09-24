@@ -1,3 +1,5 @@
+/*__________recursive approach__________*/
+
 //source: CP-algo
 const int K = 26;
 
@@ -88,12 +90,14 @@ void get_exit_link(int v)
     if(t[link].leaf) t[v].exit_link = link;
     else t[v].exit_link = t[link].exit_link;
 }
+/* _________________________________________ */
 
 
-//iterative + memorization
+
+/* __________iterative approach__________ */
 const int K = 26;
 char str[502], txt[1000006];
-int sz, num[MX], trie[MX][26], link[MX];
+int sz, trie[MX][K], link[MX];
 
 
 void add_string(char *s)
@@ -105,11 +109,11 @@ void add_string(char *s)
             trie[u][c] = sz++;
         u = trie[u][c];
     }
-    num[u] = 0;
 }
 
-void build_fail()
+void suffix_link()
 {
+    int p, u, v;
     queue <int> q;
 
     for(int i = 0; i < K; i++) {
@@ -119,7 +123,7 @@ void build_fail()
         }
         else trie[0][i] = 0;
     }
-    int p, u, v;
+
     while(!q.empty()) {
         p = q.front();
         q.pop();
@@ -128,10 +132,16 @@ void build_fail()
             u = trie[p][c];
             if(u != -1) {
                 q.push(u);
+
                 v = link[p];
                 while(trie[v][c]==-1)
                     v = link[v];
                 link[u] = trie[v][c];
+                /* //to store occurrences at each vertex
+                for(auto exL : occ[link[u]]) {
+                    occ[u].pb(exL);
+                }
+                */
             }
         }
     }
@@ -170,3 +180,4 @@ void init()
     sz = 1;
     memset(trie, -1, sizeof trie);
 }
+/* __________________________________ */
