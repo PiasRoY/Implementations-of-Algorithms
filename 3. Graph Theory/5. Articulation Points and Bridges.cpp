@@ -1,48 +1,42 @@
+bool AP[MX];
+vector <int> adj[MX];
+int root, dfs_counter, rootch;
+int low[MX], dfsno[MX], par[MX];
+
 void APB(int u)
 {
-	dfs_low[u] = dfs_no[u] = dfs_counter++;
+	low[u] = dfsno[u] = dfs_counter++;
 
-	for(int j = 0; j < adj[u].size(); j++) {
-		int v = adj[u][i];
-
-		if(dfs_no[v] == -1) {
-			dfs_parent[v] = u;
-
-			if(u == dfsRoot) rootChildren++;
+	for(int v : adj[u]) {
+		if(dfsno[v] == -1) {
+			par[v] = u;
+			if(u == root) rootch++;
 
 			APB(v);
 
-			if(dfs_low[v] >= dfs_no[u]) //Articulation Points
-				articulation_vertex[u] = true;
-
-			if(dfs_low[v] > dfs_no[u]) //Articulation Bridges
-				articulation_bridge.pb(mk(u, v));
-
-			dfs_low[u] = min(dfs_low[u], dfs_low[v]); //update dfs_low[u]
+			if(low[v] >= dfsno[u]) AP[u] = true;
+			low[u] = min(low[u], low[v]);
 		}
-		else if(v != dfs_parent[u]) {
-			dfs_low[u] = min(dfs_low[u], dfs_low[v]); //update dfs_low[u]
-		}
+		else if(v != par[u])
+			low[u] = min(low[u], dfsno[v]);
 	}
 }
 
-//Complexity: O(V+E)
-void articulationPointandBridges(int n) //n = vertex number
+void articulationPoints(int n)
 {
 	dfs_counter = 0;
-	for(int i = 0; i < n; i++) { //0-based index
-        articulation_vertex[i] = dfs_low[i] = dfs_parent[i] = 0;
-        dfs_no[i] = -1;
+	for(int i = 1; i <= n; i++) {
+        dfsno[i] = -1;
+        AP[i] = low[i] = par[i] = 0;
 	}
 
-	for(int i = 0; i < n; i++) {
-		if(dfs_no[i] == -1) {
-			dfsRoot = i;
-			rootChildren = 0;
+	for(int i = 1; i <= n; i++) {
+		if(dfsno[i] == -1) {
+			root = i, rootch = 0;
 			APB(i);
-			articulation_vertex[dfsRoot] = (rootchildren > 1);
+			AP[root] = (rootch > 1);
 		}
 	}
 
-	//now check articulation_vertex & articulation_bridge for answer.
+	//work on APB from here
 }
