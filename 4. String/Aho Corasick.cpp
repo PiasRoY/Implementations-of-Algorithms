@@ -96,18 +96,30 @@ void get_exit_link(int v)
 
 /* __________iterative approach__________ */
 const int K = 26;
-char str[502], txt[1000006];
-int sz, trie[MX][K], link[MX];
 
+struct node {
+    int nxt[K];
+    node () {
+        memset(nxt, -1, sizeof nxt);
+    }
+};
+
+vector <node> trie(1);
+
+int link[MX];
+char str[10004], txt[1000006];
 
 void add_string(char *s)
 {
-    int u = 0;
+    int u = 0, c;
     for(int i = 0; s[i]; i++) {
-        int c = s[i]-'a';
-        if(trie[u][c] == -1)
-            trie[u][c] = sz++;
-        u = trie[u][c];
+        c = convrt_char(s[i]);
+
+        if(trie[u].nxt[c] == -1) {
+            trie[u].nxt[c] = trie.size();
+            trie.pb(node());
+        }
+        u = trie[u].nxt[c];
     }
 }
 
@@ -117,11 +129,11 @@ void suffix_link()
     queue <int> q;
 
     for(int i = 0; i < K; i++) {
-        if(trie[0][i] != -1) {
-            q.push(trie[0][i]);
-            link[trie[0][i]] = 0;
+        if(trie[0].nxt[i] != -1) {
+            q.push(trie[0].nxt[i]);
+            link[trie[0].nxt[i]] = 0;
         }
-        else trie[0][i] = 0;
+        else trie[0].nxt[i] = 0;
     }
 
     while(!q.empty()) {
@@ -129,19 +141,18 @@ void suffix_link()
         q.pop();
 
         for(int c = 0; c < K; c++) {
-            u = trie[p][c];
+            u = trie[p].nxt[c];
             if(u != -1) {
                 q.push(u);
 
                 v = link[p];
-                while(trie[v][c]==-1)
+                while(trie[v].nxt[c]==-1)
                     v = link[v];
-                link[u] = trie[v][c];
-                /* //to store occurrences at each vertex
-                for(auto exL : occ[link[u]]) {
+                link[u] = trie[v].nxt[c];
+                /*//to store occurrences at each vertex
+                for(int exL : occ[link[u]]) {
                     occ[u].pb(exL);
-                }
-                */
+                }*/
             }
         }
     }
@@ -149,14 +160,16 @@ void suffix_link()
 
 int go(int v, char ch)
 {
-    int c = ch-'a';
-    if(trie[v][c] != -1) return trie[v][c];
+    int c = convrt_char(ch);
 
-    int nxt = v;
-    while(trie[nxt][c]==-1)
-        nxt = link[nxt];
-    nxt = trie[nxt][c];
-    return trie[v][c] = nxt;
+    if(trie[v].nxt[c] != -1) return trie[v].nxt[c];
+
+    int p = v;
+    while(trie[p].nxt[c]==-1)
+        p = link[p];
+    p = trie[p].nxt[c];
+
+    return trie[v].nxt[c] = p;
 }
 
 void exit_link(int v)
@@ -175,9 +188,4 @@ void match(char *s)
     }
 }
 
-void init()
-{
-    sz = 1;
-    memset(trie, -1, sizeof trie);
-}
-/* __________________________________ */
+/*------------------------------------------------*/

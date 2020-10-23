@@ -1,6 +1,6 @@
 //sparse table, Complexity- built: O(NlogN), query: O(1);
 #define MX 500
-int n, spt[MX][MX], arr[MX];
+int n, spt[MX][log2(MX)], arr[MX];
 
 void build()
 {

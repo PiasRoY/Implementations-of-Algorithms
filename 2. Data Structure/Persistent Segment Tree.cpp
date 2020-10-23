@@ -53,6 +53,30 @@ struct node {
 		return Lch+Rch;
     }
 
+    //special queries
+    int less_than(int L, int R, int indx) {
+        if(L > indx) return 0;
+		if(R <= indx) return this->val;
+
+        int mid = (L+R)/2, Lch, Rch;
+        Lch = left -> less_than(L, mid, indx);
+        Rch = right-> less_than(mid+1, R, indx);
+
+        return (Lch + Rch);
+	}
+
+	int kth_number(node *tree1, node *tree2, int L, int R, int k) {
+		if(L == R) return L;
+
+		int mid = (L+R)/2;
+		int sz = tree2->left->val - tree1->left->val;
+
+		if(sz >= k)
+			return kth_number(tree1->left, tree2->left, L, mid, k);
+		else
+			return kth_number(tree1->right, tree2->right, mid+1, R, k-sz);
+	}
+
 } *root[100005]; //total different versions of ST
 
 int main()

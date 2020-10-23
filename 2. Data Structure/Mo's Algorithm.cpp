@@ -1,33 +1,33 @@
 //mo's algorithm
 class query {
 public:
-	ll l, r, indx;
+	int l, r, indx;
 
 	query() {}
-	query(ll l, ll r, ll indx) : l(l), r(r), indx(indx) {}
+	query(int l, int r, int indx) : l(l), r(r), indx(indx) {}
 
 	bool operator < (query x) {
-		ll xbno = l/bsz, ybno = x.l/bsz;
+		int xbno = l/bsz, ybno = x.l/bsz;
 		if(xbno != ybno) return (xbno<ybno);
 		return (xbno&1)?(r<x.r):(r>x.r);
 	}
 };
 
-ll res[MX], freq[MX], ans;
+int res[MX], freq[MX], ans;
 vector <query> queries;
 
-void add(ll p);//put something
-void rem(ll p);//put something
+void add(int p);//put something
+void rem(int p);//put something
 
-void solve(ll n, ll m)
+void solve(int n, int m)
 {
-	ll l = 0, r = -1, ql, qr;
+	int l = 0, r = -1, ql, qr;
 	ans = 0;
 
 	bsz = ceil(sqrt(n));
     sort(queries.begin(), queries.end());
 
-	for(ll i = 0; i < m; i++) {
+	for(int i = 0; i < m; i++) {
 		ql = queries[i].l, qr = queries[i].r;
 
         while(l > ql) add(--l);
