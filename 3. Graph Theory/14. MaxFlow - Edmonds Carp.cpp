@@ -34,7 +34,7 @@ int bfs(int s, int t)
     return 0;
 }
 
-int edmonds_karp(int s, int t)
+int edmonds_karp(int s, int t) // O(V * E^2)
 {
     int mxflow = 0, new_flow, cur;
 
