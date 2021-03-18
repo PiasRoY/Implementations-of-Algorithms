@@ -15,10 +15,7 @@ public:
 
 	//functions
 	matrix operator* (matrix &p) { //Complexity: O(N^3)
-		matrix temp;
-
-		temp.row = row;
-		temp.col = p.col;
+		matrix temp(row, p.col);
 
 		int sum;
 		for(int i = 0; i < temp.row; i++) {
@@ -38,10 +35,7 @@ public:
 	}
 
 	matrix operator+ (matrix &p) { //Complexity: O(N^2)
-		matrix temp;
-
-		temp.row = row;
-		temp.col = col;
+		matrix temp(row, col);
 
 		for(int i = 0; i < temp.row; i++) {
 			for(int j = 0; j < temp.col; j++) {
@@ -53,10 +47,7 @@ public:
 	}
 
 	matrix identity() { //square matrix with 1s in LR-diagonal
-		matrix temp;
-
-		temp.row = row;
-		temp.col = col;
+		matrix temp(row, col);
 
 		for(int i = 0; i < row; i++)
 			temp.mat[i][i] = 1;

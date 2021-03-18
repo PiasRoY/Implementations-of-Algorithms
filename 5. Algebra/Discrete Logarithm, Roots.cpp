@@ -66,24 +66,26 @@ ll discrete_log(ll a, ll b, ll m) //Complexity: O(sqrt(m)*log(m))
 {
     ll n = sqrt (m) + 1;
 
-    ll an = 1, ans = -1;
+    ll an = 1;
     for (ll i = 0; i < n; ++i)
         an = (an * a) % m;
 
-    map<int, int> vals;
-    for (ll p = 1, cur = an; p <= n; ++p) {
-        if (!vals.count(cur)) vals[cur] = p;
-        cur = (cur * an) % m;
-    }
-
+    map<ll, ll> vals;
     for (ll q = 0, cur = b; q <= n; ++q) {
-        if (vals.count(cur)) {
-            ll ret = vals[cur] * n - q;
-            if(ans == -1 || (ret < m && ans > ret)) ans = ret;
-        }
+        vals[cur] = q;
         cur = (cur * a) % m;
     }
-    return ans;
+
+    for (ll p = 1, cur = 1; p <= n; ++p) {
+        cur = (cur * an) % m;
+
+        if (vals.count(cur)) {
+            ll ans = n * p - vals[cur];
+            return ans;
+        }
+    }
+
+    return -1;
 }
 
 /*
