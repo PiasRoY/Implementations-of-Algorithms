@@ -2,11 +2,12 @@
 References:
 1) https://math.stackexchange.com/questions/124408
 2) https://math.stackexchange.com/questions/3262664
-3) https://cp-algorithms.com/algebra/primitive-root.html
-4) https://cp-algorithms.com/algebra/discrete-log.html
-5) https://cp-algorithms.com/algebra/discrete-root.html
-6) http://mathworld.wolfram.com/PrimitiveRoot.html
-7) https://youtu.be/IviYLdqmIdw
+3) https://math.stackexchange.com/questions/166866
+4) https://cp-algorithms.com/algebra/primitive-root.html
+5) https://cp-algorithms.com/algebra/discrete-log.html
+6) https://cp-algorithms.com/algebra/discrete-root.html
+7) http://mathworld.wolfram.com/PrimitiveRoot.html
+8) https://youtu.be/IviYLdqmIdw
 */
 
 ll bigmod (ll b, ll p, ll m) {
@@ -31,9 +32,9 @@ ll bigmod (ll b, ll p, ll m) {
 ll primitive_root(ll p) //Complexity: O((logP)^6)
 {
 
-    vector<int> prime_factors;
+    vector<ll> prime_factors;
 
-    ll phi = p-1,  n = phi;
+    ll phi = p-1,  n = phi; //change phi for non-primes.
     for (ll i = 2; i*i <= n; i++) {
         if (n % i == 0) {
             prime_factors.push_back (i);
@@ -43,7 +44,7 @@ ll primitive_root(ll p) //Complexity: O((logP)^6)
     }
     if (n > 1) prime_factors.push_back (n);
 
-    for (ll res = 2; res <= p; res++) { //Complexity: O(p*sqrt(phi(p)))
+    for (ll res = 2; res < p; res++) { //Complexity: O(p*sqrt(phi(p)))
         bool ok = true;
 
         for (ll i = 0; i < prime_factors.size() && ok; i++) {
@@ -64,24 +65,21 @@ which has the average time complexity O(1) for inserting and searching.
 //gives minimum 'x' such that (a^x)%m ; gcd(a, m) = 1;
 ll discrete_log(ll a, ll b, ll m) //Complexity: O(sqrt(m)*log(m))
 {
+    unordered_map<ll, ll> vals;
     ll n = sqrt (m) + 1;
 
-    ll an = 1;
-    for (ll i = 0; i < n; ++i)
-        an = (an * a) % m;
-
-    map<ll, ll> vals;
     for (ll q = 0, cur = b; q <= n; ++q) {
         vals[cur] = q;
         cur = (cur * a) % m;
     }
 
+    ll an = bigmod(a, n, mod);
+
     for (ll p = 1, cur = 1; p <= n; ++p) {
         cur = (cur * an) % m;
 
         if (vals.count(cur)) {
-            ll ans = n * p - vals[cur];
-            return ans;
+            return n * p - vals[cur];
         }
     }
 

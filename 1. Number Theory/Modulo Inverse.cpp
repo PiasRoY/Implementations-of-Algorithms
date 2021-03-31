@@ -31,11 +31,13 @@ int modInv(int a, int m) {
 }
 
 //modulo from 1 to N
-int inv[MX];
-inv[1] = 1;
-for(int i = 2; i <= n; i++) {
-    inv[i] = (-(m/i) * inv[m%i]) % m;
-    inv[i] = inv[i] + m;
+int modInv[MX];
+
+void range_modInv()
+{
+    modInv[1] = 1;
+    for(int i = 2; i <= n; i++) {
+        modInv[i] = (-(mod/i) * modInv[mod%i]) % mod;
+        modInv[i] = modInv[i] + mod;
+    }
 }
-
-

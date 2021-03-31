@@ -22,7 +22,7 @@ ll inv(ll a, ll m)
     return x1;
 }
 
-ll CRT(vector<ll>num, vector<ll>rem, ll k)
+ll CRT(vector<ll>&num, vector<ll>&rem, ll k)
 {
     ll prod = 1;
     for (ll i = 0; i < k; i++)
@@ -39,7 +39,7 @@ ll CRT(vector<ll>num, vector<ll>rem, ll k)
     return result % prod;
 }
 
-//CRT | CF
+//CRT - Non coprime modulo | CF
 #define MX 100005
 ll a[MX], n[MX];
 
@@ -58,20 +58,19 @@ ll ex_gcd(ll a, ll b, ll &x, ll &y) {
 	return gcd;
 }
 
-ll normalize(ll x, ll m)
-{
+ll norm(ll x, ll m) {
     x %= m;
     return (x<0) ? x+=m : x;
 }
 
-ll solve()
+ll CRT()
 {
     ll m, ans, lcm, x1, x2, g;
 
     scanf("%lld", &m);
     for(ll i = 1; i <= m; i++) {
         scanf("%lld %lld", &a[i], &n[i]);
-        normalize(a[i], n[i]);
+        a[i] = norm(a[i], n[i]);
     }
 
     ans = a[1];
@@ -81,7 +80,7 @@ ll solve()
         g = ex_gcd(lcm, n[i], x1, x2);
 
         if((a[i] - ans) % g != 0) return 0; //no solution
-        ans = normalize(ans + x1 * (a[i] - ans) / g % (n[i] / g) * lcm, lcm * n[i] / g);
+        ans = norm(ans + x1 * (a[i] - ans) / g % (n[i] / g) * lcm, lcm * n[i] / g);
         lcm = lcm * n[i] / g;
     }
 
